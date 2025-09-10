@@ -15,7 +15,6 @@ console.log(arr); // [5, 4, 3, 2, 1]
 */
 
 export default function reverseArray<T>(arr:T[]): T[] {
-	console.log(!Array.isArray(arr))
 	if (!Array.isArray(arr)) {
 		throw new Error("TypeError: non-array input");
 	}
@@ -43,12 +42,10 @@ console.log('original', arr);
 console.log('reversed', reversed);
 
 // Analysis
-// time complexity: O(n), despite traverse half of the array ~n/2 swaps.
-// space complexity: O(1);
-// +-------------------+-------------+-------------+-------------+
+// Time Complexity: O(n), despite traverse half of the array ~n/2 swaps.
+// Space Complexity: O(1);
 // | Approach          | Time        | Space       | Mutates?    |
-// +-------------------+-------------+-------------+-------------+
+// | ----------------- | ----------- | ----------- | ----------- |
 // | In-place swap     | O(n)        | O(1)        | Yes         |
 // | Non in-place copy | O(n)        | O(n)        | No          |
 // | arr.reverse()     | O(n)        | O(1)        | Yes         |
-// +-------------------+-------------+-------------+-------------+
