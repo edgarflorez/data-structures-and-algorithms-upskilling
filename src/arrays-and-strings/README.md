@@ -40,29 +40,31 @@ Implement a function to reverse an array in place and another to check if a stri
 
 ## Time complexity
 
+<!-- prettier-ignore -->
 +-----------------------+------------+--------------+-----------+
 | Operation | Worst Case | Average Case | Best Case |
 +-----------------------+------------+--------------+-----------+
-| Accessing an element | O(1) | O(1) | O(1) |
-| Updating an element | O(1) | O(1) | O(1) |
-| Deleting an element | O(n) | O(n) | O(1) |
-| Inserting an element | O(n) | O(n) | O(1) |
-| Searching for element | O(n) | O(n) | O(1) |
+| Accessing an element  | O(1)       | O(1)         | O(1)      |
+| Updating an element   | O(1)       | O(1)         | O(1)      |
+| Deleting an element   | O(n)       | O(n)         | O(1)      |
+| Inserting an element  | O(n)       | O(n)         | O(1)      |
+| Searching for element | O(n)       | O(n)         | O(1)      |
 +-----------------------+------------+--------------+-----------+
 
 ## Algorithm Complexity
 
+<!-- prettier-ignore -->
 +----------------+------------+--------------+--------------+------------------+
-| Algorithm | Worst Case | Average Case | Best Case | Space Complexity |
+| Algorithm      | Worst Case | Average Case | Best Case | Space Complexity |
 +----------------+------------+--------------+--------------+------------------+
-| Quicksort | O(n^2) | O(n log n) | O(n log n) | O(log n) |
-| Mergesort | O(n log n) | O(n log n) | O(n log n) | O(n) |
-| Heapsort | O(n log n) | O(n log n) | O(n log n) | O(1) |
-| Bubble Sort | O(n^2) | O(n^2) | O(n) | O(1) |
-| Insertion Sort | O(n^2) | O(n^2) | O(n) | O(1) |
-| Selection Sort | O(n^2) | O(n^2) | O(n^2) | O(1) |
-| Binary Search | O(log n) | O(log n) | O(1) | O(1) |
-| Linear Search | O(n) | O(n) | O(1) | O(1) |
+| Quicksort      | O(n^2)     | O(n log n)   | O(n log n)   | O(log n)         |
+| Mergesort      | O(n log n) | O(n log n)   | O(n log n)   | O(n) 			   |
+| Heapsort       | O(n log n) | O(n log n)   | O(n log n)   | O(1) 			   |
+| Bubble Sort    | O(n^2)     | O(n^2)       | O(n)         | O(1) 			   |
+| Insertion Sort | O(n^2)     | O(n^2)       | O(n)         | O(1) 			   |
+| Selection Sort | O(n^2)     | O(n^2)       | O(n^2)       | O(1) 			   |
+| Binary Search  | O(log n)   | O(log n)     | O(1)         | O(1) 			   |
+| Linear Search  | O(n)       | O(n)         | O(1)         | O(1) 			   |
 +----------------+------------+--------------+--------------+------------------+
 
 ## Resources
