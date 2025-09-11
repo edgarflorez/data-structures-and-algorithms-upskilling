@@ -1,4 +1,4 @@
-import reverseArray from "./reverse-an-array";
+import reverseArray from "./reverse-an-array.js";
 
 describe("The reverse array", () => {
 	it("reverse an array, even list", () => {

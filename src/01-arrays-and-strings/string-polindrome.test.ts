@@ -1,4 +1,4 @@
-import { isStringPolindrome } from "./string-polindrome";
+import { isStringPolindrome } from "./string-polindrome.js";
 
 describe("Is string polindrome", () => {
 	it('checks for a valid polidrome, single word', () => {
