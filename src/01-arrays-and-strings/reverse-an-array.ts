@@ -36,11 +36,6 @@ export default function reverseArray<T>(arr:T[]): T[] {
 	return arr;
 }
 
-let arr: number[] = [1, 2, 3, 4, 5];
-let reversed = reverseArray(arr);
-console.log('original', arr);
-console.log('reversed', reversed);
-
 // Analysis
 // Time Complexity: O(n), despite traverse half of the array ~n/2 swaps.
 // Space Complexity: O(1);

@@ -30,10 +30,10 @@ describe("Is string polindrome", () => {
 
 	it('throws and error for non-string parameters', () => {
 		const input = ["Hello"];
-		const expectedResult = "TypeError: non-string input";
+		const expected = "TypeError: non-string input";
 
 		const result = () => isStringPolindrome(input);
 
-		expect(result).toThrow(expectedResult);
+		expect(result).toThrow(expected);
 	})
 })
