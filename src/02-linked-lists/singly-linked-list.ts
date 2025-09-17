@@ -100,6 +100,7 @@ export default class LinkedList<T> {
 				if(counter + 1 === insertIndex) {
 					newNode.next = pointer.next;
 					pointer.next = newNode;
+					this.size++;
 					break;
 				}
 				if(pointer.next) {
@@ -174,6 +175,7 @@ export default class LinkedList<T> {
 				// The modification should be done on the previous node
 				if(counter + 1 === deleteIndex) {
 					pointer.next = pointer.next?.next || null;
+					this.size--;
 					break;
 				}
 				if(pointer.next) {

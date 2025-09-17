@@ -274,11 +274,10 @@ describe("Linked List: Singly Linked List, searching", () => {
 		myLinkedList.insertAtFront(1)
 		myLinkedList.insertAtFront(2)
 		myLinkedList.insertAtFront(3)
-		const expected = true;
 
 		const result = myLinkedList.search(2);
 
-		expect(result).toStrictEqual(expected);
+		expect(result).toBeTruthy();
 	})
 
 	it('should return false when searching for a value not in the liked list', () => {
@@ -286,20 +285,18 @@ describe("Linked List: Singly Linked List, searching", () => {
 		myLinkedList.insertAtFront(1)
 		myLinkedList.insertAtFront(2)
 		myLinkedList.insertAtFront(3)
-		const expected = false;
 
 		const result = myLinkedList.search(4);
 
-		expect(result).toStrictEqual(expected);
+		expect(result).toBeFalsy();
 	})
 
 	it('should return false when searching on an empty liked list', () => {
 		const myLinkedList = new LinkedList();
-		const expected = false;
 
 		const result = myLinkedList.search(1);
 
-		expect(result).toStrictEqual(expected);
+		expect(result).toBeFalsy();
 	})
 })
 
@@ -317,11 +314,10 @@ describe("Linked List: Singly Linked List, getAt", () => {
 	})
 	it("should get undefined when trying to getAt on an empty Liked List", () => {
 		const myLinkedList = new LinkedList();
-		const expected = undefined;
 
 		const result = myLinkedList.getAt(1);
 
-		expect(result).toStrictEqual(expected);
+		expect(result).toBeUndefined();
 	})
 	it("should thrown an error for a index out of bound, upperbound", () => {
 		const myLinkedList = new LinkedList();
@@ -351,14 +347,58 @@ describe("Linked List: Singly Linked List, getAt", () => {
 	})
 })
 
+describe("Linked List: Singly Linked List, size", () => {
+	it("should get size after inserting with different methods", () => {
+		const myLinkedList = new LinkedList();
+		myLinkedList.insertAtFront(1)
+		myLinkedList.insertAtEnd(2)
+		myLinkedList.insertAt(3, 1);
 
-// const myLinkedList = new LinkedList();
-// 		const expected = 'Error: Index out of bound'
+		const expected = 3;
 
-// 		const result = () => {
-// 			myLinkedList.insertAtEnd(1)
-// 			myLinkedList.insertAtEnd(2)
-// 			myLinkedList.insertAt(3, 10);
-// 		};
+		const result = myLinkedList.size;
 
-// 		expect(result).toThrow(expected);
+		expect(result).toStrictEqual(expected);
+	})
+	it("should get size after inserting and deleting with different methods", () => {
+		const myLinkedList = new LinkedList();
+		myLinkedList.insertAtFront(1)
+		myLinkedList.insertAtFront(2)
+		myLinkedList.insertAtFront(3)
+		myLinkedList.insertAtFront(4)
+		myLinkedList.deleteAtFront();
+		myLinkedList.deleteAtEnd();
+		myLinkedList.deleteAt(1);
+
+		const expected = 1;
+
+		const result = myLinkedList.size;
+
+		expect(result).toStrictEqual(expected);
+	})
+	it("should get size after inserting and deleting the same number of elements", () => {
+		const myLinkedList = new LinkedList();
+		myLinkedList.insertAtFront(1)
+		myLinkedList.insertAtEnd(2)
+		myLinkedList.insertAt(3, 1);
+		myLinkedList.deleteAt(1);
+		myLinkedList.deleteAtFront()
+		myLinkedList.deleteAtEnd()
+
+		const expected = 0;
+
+		const result = myLinkedList.size;
+
+		expect(result).toStrictEqual(expected);
+	})
+	it("should get a size of 0 for a new LinkedList", () => {
+		const myLinkedList = new LinkedList();
+
+		const expected = 0;
+
+		const result = myLinkedList.size;
+
+		expect(result).toStrictEqual(expected);
+	})
+
+})
