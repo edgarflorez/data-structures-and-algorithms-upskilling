@@ -232,6 +232,10 @@ export default class LinkedList<T> {
 		}
 	}
 
+	isEmpty = () => {
+		return !this.size;
+	}
+
 	printList = () => {
 		let response: T[] = []
 
@@ -242,6 +246,22 @@ export default class LinkedList<T> {
 		}
 
 		return response;
+	}
+
+	reverse = () => {
+		if(this.size === 0 || this.size === 1) {
+			throw new Error("Error: the list has one or none elements, is not possible to reverse")
+		}
+
+		if(this.head && this.size > 1){
+			const headRef = this.head;
+			for (let index = 0; index < this.size - 1 ; index++) {
+				const moveRef = headRef.next;
+				headRef.next = moveRef.next;
+				moveRef.next = this.head
+				this.head = moveRef;
+			}
+		}
 	}
 }
 
