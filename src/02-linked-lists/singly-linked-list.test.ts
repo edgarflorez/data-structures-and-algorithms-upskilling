@@ -5,7 +5,7 @@ describe("Linked List: Singly Linked List", () => {
 		const myLinkedList = new LinkedList();
 		const expected: number[] = [];
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected)
 	})
@@ -19,7 +19,7 @@ describe("Linked List: Singly Linked List, inserting", () => {
 		myLinkedList.insertAtFront(2)
 		myLinkedList.insertAtFront(3)
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected)
 	})
@@ -30,7 +30,7 @@ describe("Linked List: Singly Linked List, inserting", () => {
 		myLinkedList.insertAtFront("B")
 		myLinkedList.insertAtFront("C")
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected)
 	})
@@ -41,7 +41,7 @@ describe("Linked List: Singly Linked List, inserting", () => {
 		myLinkedList.insertAtFront("B")
 		myLinkedList.insertAtFront(1);
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected)
 	})
@@ -52,7 +52,7 @@ describe("Linked List: Singly Linked List, inserting", () => {
 		myLinkedList.insertAtEnd(2)
 		myLinkedList.insertAtEnd(3)
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
@@ -63,7 +63,7 @@ describe("Linked List: Singly Linked List, inserting", () => {
 		myLinkedList.insertAtEnd(3)
 		myLinkedList.insertAt(1,2);
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
@@ -74,7 +74,7 @@ describe("Linked List: Singly Linked List, inserting", () => {
 		myLinkedList.insertAtEnd(3)
 		myLinkedList.insertAt(0,1);
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
@@ -85,13 +85,13 @@ describe("Linked List: Singly Linked List, inserting", () => {
 		myLinkedList.insertAtEnd(2)
 		myLinkedList.insertAt(2,3);
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
 	it('should throw an error on inserting with a negative index', () => {
 		const myLinkedList = new LinkedList();
-		const expected = 'Index out of bound for inserting'
+		const expected = 'Index out of bound for insert'
 
 		const result = () => {
 			myLinkedList.insertAtEnd(1)
@@ -103,7 +103,7 @@ describe("Linked List: Singly Linked List, inserting", () => {
 	})
 	it('should throw an error on inserting with a out of bound positive index', () => {
 		const myLinkedList = new LinkedList();
-		const expected = 'Index out of bound for inserting'
+		const expected = 'Index out of bound for insert'
 
 		const result = () => {
 			myLinkedList.insertAtEnd(1)
@@ -136,7 +136,7 @@ describe("Linked List: Singly Linked List, deleting", () => {
 		myLinkedList.insertAtEnd(3)
 		myLinkedList.deleteAtFront()
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
@@ -148,7 +148,7 @@ describe("Linked List: Singly Linked List, deleting", () => {
 		myLinkedList.deleteAtFront();
 		myLinkedList.deleteAtFront();
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
@@ -169,7 +169,7 @@ describe("Linked List: Singly Linked List, deleting", () => {
 		myLinkedList.insertAtEnd(3)
 		myLinkedList.deleteAtEnd()
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
@@ -181,7 +181,7 @@ describe("Linked List: Singly Linked List, deleting", () => {
 		myLinkedList.deleteAtEnd();
 		myLinkedList.deleteAtEnd();
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
@@ -202,7 +202,7 @@ describe("Linked List: Singly Linked List, deleting", () => {
 		myLinkedList.insertAtEnd(3)
 		myLinkedList.deleteAt(1);
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
@@ -214,7 +214,7 @@ describe("Linked List: Singly Linked List, deleting", () => {
 		myLinkedList.insertAtEnd(3)
 		myLinkedList.deleteAt(0);
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
@@ -226,13 +226,13 @@ describe("Linked List: Singly Linked List, deleting", () => {
 		myLinkedList.insertAtEnd(3)
 		myLinkedList.deleteAt(2);
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
 	it('should throw an error on trying to delete a negative index', () => {
 		const myLinkedList = new LinkedList();
-		const expected = 'Error: Index out of bound'
+		const expected = 'Index out of bound for access'
 
 		const result = () => {
 			myLinkedList.insertAtEnd(1)
@@ -242,14 +242,25 @@ describe("Linked List: Singly Linked List, deleting", () => {
 
 		expect(result).toThrow(expected);
 	})
-	it('should throw an error on trying to insert a out of bound positive index', () => {
+	it('should throw an error on trying to delete a out of bound positive index', () => {
 		const myLinkedList = new LinkedList();
-		const expected = 'Error: Index out of bound'
+		const expected = 'Index out of bound for access'
 
 		const result = () => {
 			myLinkedList.insertAtEnd(1)
 			myLinkedList.insertAtEnd(2)
 			myLinkedList.deleteAt(2);
+		};
+		expect(result).toThrow(expected);
+	})
+	it('should throw an error on trying to delete using a non integer index', () => {
+		const myLinkedList = new LinkedList();
+		const expected = 'Index must be a number'
+
+		const result = () => {
+			myLinkedList.insertAtEnd(1)
+			myLinkedList.insertAtEnd(2)
+			myLinkedList.deleteAt("1");
 		};
 
 		expect(result).toThrow(expected);
@@ -257,32 +268,58 @@ describe("Linked List: Singly Linked List, deleting", () => {
 })
 
 describe("Linked List: Singly Linked List, searching", () => {
-	it('should return true when searching for a value in the liked list', () => {
+	it('should return true when searching for a valid value in the liked list with numbers', () => {
 		const myLinkedList = new LinkedList();
 		myLinkedList.insertAtFront(1)
 		myLinkedList.insertAtFront(2)
 		myLinkedList.insertAtFront(3)
+		const expected = 1;
 
 		const result = myLinkedList.search(2);
 
-		expect(result).toBeTruthy();
+		expect(result).to .toStrictEqual(expected);
+	})
+	it('should return true when searching for a valid value in the liked list with strings', () => {
+		const myLinkedList = new LinkedList();
+		myLinkedList.insertAtFront("a")
+		myLinkedList.insertAtFront("b")
+		myLinkedList.insertAtFront("c")
+		const expected = 1;
+
+		const result = myLinkedList.search("b");
+
+		expect(result).to .toStrictEqual(expected);
 	})
 	it('should return false when searching for a value not in the liked list', () => {
 		const myLinkedList = new LinkedList();
 		myLinkedList.insertAtFront(1)
 		myLinkedList.insertAtFront(2)
 		myLinkedList.insertAtFront(3)
+		const expected = -1;
 
 		const result = myLinkedList.search(4);
 
-		expect(result).toBeFalsy();
+		expect(result).toStrictEqual(expected);
 	})
 	it('should return false when searching on an empty liked list', () => {
 		const myLinkedList = new LinkedList();
+		const expected = -1;
 
 		const result = myLinkedList.search(1);
 
-		expect(result).toBeFalsy();
+		expect(result).toStrictEqual(expected);
+	})
+	it('should return true when searching for a simple object', () => {
+		const myLinkedList = new LinkedList();
+		myLinkedList.insertAtEnd({name: 'foo'})
+		myLinkedList.insertAtEnd({name: 'bar'})
+		myLinkedList.insertAtEnd({name: 'baz'})
+		const expected = 1;
+		const target = {name: 'bar'};
+
+		const result = myLinkedList.search(target, (a, b) => a.name === b.name);
+
+		expect(result).toStrictEqual(expected);
 	})
 })
 
@@ -300,14 +337,17 @@ describe("Linked List: Singly Linked List, getAt", () => {
 	})
 	it("should get undefined when trying to getAt on an empty Liked List", () => {
 		const myLinkedList = new LinkedList();
+		const expected = "Not valid operation on an empty list"
 
-		const result = myLinkedList.getAt(1);
+		const result = () => {
+			myLinkedList.getAt(1);
+		};
 
-		expect(result).toBeUndefined();
+		expect(result).toThrow(expected);
 	})
 	it("should thrown an error for a index out of bound, upperbound", () => {
 		const myLinkedList = new LinkedList();
-		const expected = "Error: Index out of bound";
+		const expected = "Index out of bound for access";
 
 		const result = () => {
 			myLinkedList.insertAtFront("a")
@@ -320,13 +360,26 @@ describe("Linked List: Singly Linked List, getAt", () => {
 	})
 	it("should thrown an error for a index out of bound, lowerbound", () => {
 		const myLinkedList = new LinkedList();
-		const expected = "Error: Index out of bound";
+		const expected = "Index out of bound for access";
 
 		const result = () => {
 			myLinkedList.insertAtFront("a")
 			myLinkedList.insertAtFront("b")
 			myLinkedList.insertAtFront("c")
 			myLinkedList.getAt(-1)
+		};
+
+		expect(result).toThrow(expected);
+	})
+	it("should thrown an error for a not-a-number index", () => {
+		const myLinkedList = new LinkedList();
+		const expected = "Index must be a number";
+
+		const result = () => {
+			myLinkedList.insertAtFront("a")
+			myLinkedList.insertAtFront("b")
+			myLinkedList.insertAtFront("c")
+			myLinkedList.getAt('a')
 		};
 
 		expect(result).toThrow(expected);
@@ -413,15 +466,30 @@ describe("Linked List: Singly Linked List, printList", () => {
 		myLinkedList.insertAtEnd(2)
 		const expected = [1,2];
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	})
 	it('should print an empty list for an empty Linked List', () => {
 		const myLinkedList = new LinkedList();
-		const expected = [];
+		const expected: T[] = [];
 
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
+
+		expect(result).toStrictEqual(expected);
+	})
+})
+
+describe("Linked List: Singly Linked List, clear", () => {
+	it('clear a list after some insertion actions', () => {
+		const myLinkedList = new LinkedList();
+		myLinkedList.insertAtEnd(1);
+		myLinkedList.insertAtEnd(2);
+		myLinkedList.insertAtEnd(3);
+		const expected = 0;
+
+		myLinkedList.clear();
+		const result = myLinkedList.size();
 
 		expect(result).toStrictEqual(expected);
 	})
@@ -436,40 +504,39 @@ describe("Linked List: Singly Linked List, reverse", () => {
 		const expected = [1,2,3];
 
 		myLinkedList.reverse();
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	} )
-	it('reverse a liked list in place, minimum elements - TWO', () => {
+	it('reverse a liked list in place, with minimum of TWO elements', () => {
 		const myLinkedList = new LinkedList();
 		myLinkedList.insertAtFront(1);
 		myLinkedList.insertAtFront(2);
 		const expected = [1,2];
 
 		myLinkedList.reverse();
-		const result = myLinkedList.printList();
+		const result = myLinkedList.toArray();
 
 		expect(result).toStrictEqual(expected);
 	} )
-	it('should throw and error for linked list with one element', () => {
+	it('perform no-op on reverse a Linked List with ONE element', () => {
 		const myLinkedList = new LinkedList();
 		myLinkedList.insertAtFront(1);
-		const expected = "Error: the list has one or none elements, is not possible to reverse";
+		const expected: T[] = [1];
 
-		const result = () => {
-			myLinkedList.reverse();
-		}
+		myLinkedList.reverse();
+		const result = myLinkedList.toArray();
 
-		expect(result).toThrow(expected);
+		expect(result).toStrictEqual(expected);
 	} )
-	it('should throw and error for linked list with no elements', () => {
+	it('perform no-op on reverse a Linked List with NO elements', () => {
 		const myLinkedList = new LinkedList();
-		const expected = "Error: the list has one or none elements, is not possible to reverse";
+		const expected: T[] = [];
 
-		const result = () => {
-			myLinkedList.reverse();
-		}
+		myLinkedList.reverse();
 
-		expect(result).toThrow(expected);
+		const result = myLinkedList.toArray();
+
+		expect(result).toStrictEqual(expected);
 	} )
 })

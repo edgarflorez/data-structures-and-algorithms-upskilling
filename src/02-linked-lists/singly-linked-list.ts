@@ -45,9 +45,37 @@ export default class LinkedList<T> {
 		this._size = 0;
 	}
 
+	private _assertInsertIndex(index: number): void {
+		if(!Number.isInteger(index)) throw new RangeError("Index must be a number")
+		if(index < 0 || index > this._size) {
+			throw new RangeError("Index out of bound for insert")
+		}
+	}
+
+
+	private _assertAccessIndex(index: number): void {
+		if(!Number.isInteger(index)) throw new RangeError("Index must be a number")
+		if(index < 0 || index >= this._size) {
+			throw new RangeError("Index out of bound for access")
+		}
+	}
+
+	private _getNodeAt(index: number): Node<T> {
+		this._assertAccessIndex(index);
+
+		let curr = this._head;
+		for (let i = 0; i < index; i++) {
+			curr = curr!.next;
+		}
+		if (!curr) {
+			throw new Error(`Invariant violation: Node at index ${index} not found`);
+		}
+		return curr;
+	}
+
 	insertAtFront = (x:T) => {
 		const newNode = new Node(x);
-		if(!this._head) {
+		if(this._size === 0) {
 			this._head = newNode;
 			this._tail = newNode;
 			this._size = 1;
@@ -61,7 +89,7 @@ export default class LinkedList<T> {
 
 	insertAtEnd = (x:T) => {
 		const newNode = new Node(x);
-		if(!this._head) {
+		if(this._size === 0) {
 			this._head = newNode;
 			this._tail = newNode;
 			this._size = 1;
@@ -74,31 +102,14 @@ export default class LinkedList<T> {
 		this._size++;
 	}
 
-	private assertInsertIndex(index: number): void {
-		if(!Number.isInteger(index)) throw new RangeError("Index must be a number")
-		if(index < 0 || index > this._size) {
-			throw new RangeError("Index out of bound for inserting")
-		}
-
-	}
-
-	private _getNodeAt(index: number): Node<T> | null {
-		for (let i = 0, refNode:Node<T> | null = this._head; i < this._size; i++) {
-			if(i === index) {
-				return refNode;
-			}
-			refNode = refNode?.next || null;
-		}
-	}
-
 	insertAt = (index: number, value:T) => {
-		this.assertInsertIndex(index);
-		if(index === 0) return void this.insertAtFront(value);
-		if(index === this._size) return void this.insertAtEnd(value);
+		this._assertInsertIndex(index);
+		if(index === 0) return this.insertAtFront(value);
+		if(index === this._size) return this.insertAtEnd(value);
 
 		const prevNode = this._getNodeAt(index - 1);
 		const newNode = new Node(value);
-		newNode.next = prevNode?.next || null;
+		newNode .next = prevNode.next;
 		prevNode.next = newNode;
 		this._size++;
 	}
@@ -116,12 +127,10 @@ export default class LinkedList<T> {
 
 	deleteAtEnd = (): T | undefined => {
 		if(this._size === 0) return undefined;
-		if(this._size === 1) return void this.deleteAtFront();
+		if(this._size === 1) return this.deleteAtFront();
 
-		// 🔎 check value
-		// Why GPT suggests: const value = (prev.next as ListNode<T>).value;
-		const value = (this._tail as Node<T>).data || undefined;
 		const prevNode: Node<T> | null = this._getNodeAt(this._size - 2);
+		const value: T = (prevNode.next as Node<T>).data;
 		this._tail = prevNode;
 		this._size--;
 		(prevNode as Node<T>).next = null;
@@ -129,87 +138,52 @@ export default class LinkedList<T> {
 		return value;
 	}
 
-	deleteAt = (deleteIndex: number) => {
-		if(deleteIndex < 0 || deleteIndex >= this._size) {
-			throw new Error("Error: Index out of bound");
+	deleteAt = (index: number): T | undefined => {
+		this._assertAccessIndex(index);
+		if(index === 0) return this.deleteAtFront();
+		if(index === this._size - 1) return this.deleteAtEnd();
+
+		const prevNode: Node<T> | null = this._getNodeAt(index - 1);
+		if(prevNode && prevNode.next){
+			const value: T = (prevNode.next as Node<T>).data
+			prevNode.next = prevNode.next.next;
+			this._size--;
+			return value;
 		}
 
-		if(deleteIndex === 0) {
-			this.deleteAtFront();
-		}
-
-		if(this._head) {
-			let counter = 0;
-			let pointer: Node<T> = this._head;
-			while(counter <= deleteIndex) {
-				// The modification should be done on the previous node
-				if(counter + 1 === deleteIndex) {
-					pointer.next = pointer.next?.next || null;
-					this._size--;
-					break;
-				}
-				if(pointer.next) {
-					pointer = pointer.next;
-				}
-				counter++
-			}
-		}
+		return undefined;
 	}
 
-	search = (query: T) => {
+	search = (query: T, comparator: (a: T, b: T) => boolean = (a, b) => a === b): number => {
+		if (!this._size) return -1;
+
+		let index = 0;
+		for (let curr = this._head; curr !== null; curr = curr.next) {
+			if (comparator(curr.data, query)) return index;
+			index++;
+		}
+		return -1;
+	};
+
+	getAt = (index:number) => {
 		if(!this._size) {
-			return false;
+			throw new Error("Not valid operation on an empty list")
+			// return null;
 		}
+		this._assertAccessIndex(index)
 
-		if(this._head) {
-			let counter = 0;
-			let pointer: Node<T> = this._head;
-			while(counter < this._size) {
-				if(pointer.data === query) {
-					return true;
-				}
-				if(pointer.next) {
-					pointer = pointer.next;
-				}
-				counter++
-			}
-
-			return false
-		}
-	}
-
-	getAt = (getIndex:number) => {
-		if(!this._size) {
-			return undefined;
-		}
-
-		if(getIndex < 0 || getIndex >= this._size) {
-			throw new Error("Error: Index out of bound")
-		}
-
-		if(this._head) {
-			let counter = 0;
-			let pointer: Node<T> = this._head;
-			while(counter < this._size) {
-				if(counter === getIndex) {
-					return pointer.data;
-				}
-				if(pointer.next) {
-					pointer = pointer.next;
-				}
-				counter++
-			}
-		}
+		const node: Node<T> = this._getNodeAt(index);
+		return node.data;
 	}
 
 	isEmpty = () => {
 		return !this._size;
 	}
 
-	printList = () => {
+	toArray = () => {
 		let response: T[] = []
 
-		let curr:Node = this._head;
+		let curr: Node<T> | null = this._head;
 		while (curr !== null) {
 			response.push(curr.data);
 			curr = curr.next;
@@ -224,18 +198,31 @@ export default class LinkedList<T> {
 
 	reverse = () => {
 		if(this._size === 0 || this._size === 1) {
-			throw new Error("Error: the list has one or none elements, is not possible to reverse")
+			return;
 		}
 
-		if(this._head && this._size > 1){
-			const headRef = this._head;
-			for (let index = 0; index < this._size - 1 ; index++) {
-				const moveRef = headRef.next;
-				headRef.next = moveRef.next;
-				moveRef.next = this._head
-				this._head = moveRef;
-			}
+		// Use the prev, current, next pointer reversal
+		// https://www.geeksforgeeks.org/dsa/reverse-a-linked-list/
+		let prev = null;
+		let curr: Node<T> | null = this._head;
+		let next: Node<T> | null = null;
+
+		while(curr) {
+			// Store next
+			next = curr.next;
+			// reverse link
+			curr.next = prev;
+			// Move two pointers one step ahead
+			prev = curr;
+			curr = next;
 		}
+
+		this._tail = this._head;
+		this._head = prev;
+	}
+
+	clear = () => {
+		this._resetLinkedList();
 	}
 }
 
