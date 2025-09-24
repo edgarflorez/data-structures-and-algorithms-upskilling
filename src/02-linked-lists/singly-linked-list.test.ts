@@ -232,7 +232,7 @@ describe("Linked List: Singly Linked List, deleting", () => {
 	})
 	it('should throw an error on trying to delete a negative index', () => {
 		const myLinkedList = new LinkedList();
-		const expected = 'Error: Index out of bound'
+		const expected = 'Index out of bound for Deleting'
 
 		const result = () => {
 			myLinkedList.insertAtEnd(1)
@@ -242,14 +242,25 @@ describe("Linked List: Singly Linked List, deleting", () => {
 
 		expect(result).toThrow(expected);
 	})
-	it('should throw an error on trying to insert a out of bound positive index', () => {
+	it('should throw an error on trying to delete a out of bound positive index', () => {
 		const myLinkedList = new LinkedList();
-		const expected = 'Error: Index out of bound'
+		const expected = 'Index out of bound for Deleting'
 
 		const result = () => {
 			myLinkedList.insertAtEnd(1)
 			myLinkedList.insertAtEnd(2)
 			myLinkedList.deleteAt(2);
+		};
+		expect(result).toThrow(expected);
+	})
+	it('should throw an error on trying to delete using a non integer index', () => {
+		const myLinkedList = new LinkedList();
+		const expected = 'Index must be a number'
+
+		const result = () => {
+			myLinkedList.insertAtEnd(1)
+			myLinkedList.insertAtEnd(2)
+			myLinkedList.deleteAt("1");
 		};
 
 		expect(result).toThrow(expected);
@@ -257,7 +268,7 @@ describe("Linked List: Singly Linked List, deleting", () => {
 })
 
 describe("Linked List: Singly Linked List, searching", () => {
-	it('should return true when searching for a value in the liked list', () => {
+	it('should return true when searching for a valid value in the liked list', () => {
 		const myLinkedList = new LinkedList();
 		myLinkedList.insertAtFront(1)
 		myLinkedList.insertAtFront(2)
@@ -265,7 +276,7 @@ describe("Linked List: Singly Linked List, searching", () => {
 
 		const result = myLinkedList.search(2);
 
-		expect(result).toBeTruthy();
+		expect(result).toStrictEqual(1);
 	})
 	it('should return false when searching for a value not in the liked list', () => {
 		const myLinkedList = new LinkedList();
@@ -275,14 +286,14 @@ describe("Linked List: Singly Linked List, searching", () => {
 
 		const result = myLinkedList.search(4);
 
-		expect(result).toBeFalsy();
+		expect(result).toStrictEqual(-1);
 	})
 	it('should return false when searching on an empty liked list', () => {
 		const myLinkedList = new LinkedList();
 
 		const result = myLinkedList.search(1);
 
-		expect(result).toBeFalsy();
+		expect(result).toStrictEqual(-1);;
 	})
 })
 

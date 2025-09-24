@@ -118,10 +118,8 @@ export default class LinkedList<T> {
 		if(this._size === 0) return undefined;
 		if(this._size === 1) return void this.deleteAtFront();
 
-		// 🔎 check value
-		// Why GPT suggests: const value = (prev.next as ListNode<T>).value;
-		const value = (this._tail as Node<T>).data || undefined;
 		const prevNode: Node<T> | null = this._getNodeAt(this._size - 2);
+		const value: T = (prevNode.next as Node<T>).data;
 		this._tail = prevNode;
 		this._size--;
 		(prevNode as Node<T>).next = null;
@@ -129,53 +127,38 @@ export default class LinkedList<T> {
 		return value;
 	}
 
-	deleteAt = (deleteIndex: number) => {
-		if(deleteIndex < 0 || deleteIndex >= this._size) {
-			throw new Error("Error: Index out of bound");
-		}
-
-		if(deleteIndex === 0) {
-			this.deleteAtFront();
-		}
-
-		if(this._head) {
-			let counter = 0;
-			let pointer: Node<T> = this._head;
-			while(counter <= deleteIndex) {
-				// The modification should be done on the previous node
-				if(counter + 1 === deleteIndex) {
-					pointer.next = pointer.next?.next || null;
-					this._size--;
-					break;
-				}
-				if(pointer.next) {
-					pointer = pointer.next;
-				}
-				counter++
-			}
+	private _assertDeleteIndex(index: number): void {
+		if(!Number.isInteger(index)) throw new RangeError("Index must be a number")
+		if(index < 0 || index >= this._size) {
+			throw new RangeError('Index out of bound for Deleting')
 		}
 	}
 
-	search = (query: T) => {
+	deleteAt = (index: number): T | undefined => {
+		this._assertDeleteIndex(index);
+		if(index === 0) return void this.deleteAtFront();
+		if(index === this._size - 1) return void this.deleteAtEnd();
+
+		const prevNode: Node<T> | null = this._getNodeAt(index - 1);
+		const value: T = (prevNode.next as Node<T>).data
+		prevNode.next = prevNode.next.next;
+		this._size--;
+
+		return value;
+	}
+
+	search = (query: T): number => {
 		if(!this._size) {
-			return false;
+			return -1;
 		}
 
-		if(this._head) {
-			let counter = 0;
-			let pointer: Node<T> = this._head;
-			while(counter < this._size) {
-				if(pointer.data === query) {
-					return true;
-				}
-				if(pointer.next) {
-					pointer = pointer.next;
-				}
-				counter++
+		for(let curr: Node<T> | null = this._head, i = 0; curr != null; curr = curr.next || null , i++ ) {
+			if(curr.data === query) {
+				return i;
 			}
-
-			return false
 		}
+
+		return -1;
 	}
 
 	getAt = (getIndex:number) => {
