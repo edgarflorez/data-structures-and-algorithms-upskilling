@@ -335,9 +335,9 @@ describe("Linked List: Singly Linked List, getAt", () => {
 
 		expect(result).toStrictEqual(expected);
 	})
-	it("should get undefined when trying to getAt on an empty Liked List", () => {
+	it("should get and error when trying to getAt on an empty Liked List", () => {
 		const myLinkedList = new LinkedList();
-		const expected = "Not valid operation on an empty list"
+		const expected = "Index out of bound for access"
 
 		const result = () => {
 			myLinkedList.getAt(1);

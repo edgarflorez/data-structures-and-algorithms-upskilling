@@ -45,8 +45,12 @@ export default class LinkedList<T> {
 		this._size = 0;
 	}
 
-	private _assertInsertIndex(index: number): void {
+	private _assertTypeIndex(index: number): void {
 		if(!Number.isInteger(index)) throw new RangeError("Index must be a number")
+	}
+
+	private _assertInsertIndex(index: number): void {
+		this._assertTypeIndex(index);
 		if(index < 0 || index > this._size) {
 			throw new RangeError("Index out of bound for insert")
 		}
@@ -54,7 +58,7 @@ export default class LinkedList<T> {
 
 
 	private _assertAccessIndex(index: number): void {
-		if(!Number.isInteger(index)) throw new RangeError("Index must be a number")
+		this._assertTypeIndex(index);
 		if(index < 0 || index >= this._size) {
 			throw new RangeError("Index out of bound for access")
 		}
@@ -67,9 +71,7 @@ export default class LinkedList<T> {
 		for (let i = 0; i < index; i++) {
 			curr = curr!.next;
 		}
-		if (!curr) {
-			throw new Error(`Invariant violation: Node at index ${index} not found`);
-		}
+
 		return curr;
 	}
 
@@ -109,7 +111,7 @@ export default class LinkedList<T> {
 
 		const prevNode = this._getNodeAt(index - 1);
 		const newNode = new Node(value);
-		newNode .next = prevNode.next;
+		newNode.next = prevNode.next;
 		prevNode.next = newNode;
 		this._size++;
 	}
@@ -144,14 +146,10 @@ export default class LinkedList<T> {
 		if(index === this._size - 1) return this.deleteAtEnd();
 
 		const prevNode: Node<T> | null = this._getNodeAt(index - 1);
-		if(prevNode && prevNode.next){
-			const value: T = (prevNode.next as Node<T>).data
-			prevNode.next = prevNode.next.next;
-			this._size--;
-			return value;
-		}
-
-		return undefined;
+		const value: T = (prevNode.next as Node<T>).data
+		prevNode.next = prevNode.next!.next;
+		this._size--;
+		return value;
 	}
 
 	search = (query: T, comparator: (a: T, b: T) => boolean = (a, b) => a === b): number => {
@@ -166,10 +164,6 @@ export default class LinkedList<T> {
 	};
 
 	getAt = (index:number) => {
-		if(!this._size) {
-			throw new Error("Not valid operation on an empty list")
-			// return null;
-		}
 		this._assertAccessIndex(index)
 
 		const node: Node<T> = this._getNodeAt(index);
