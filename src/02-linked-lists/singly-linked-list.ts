@@ -56,7 +56,6 @@ export default class LinkedList<T> {
 		}
 	}
 
-
 	private _assertAccessIndex(index: number): void {
 		this._assertTypeIndex(index);
 		if(index < 0 || index >= this._size) {
@@ -64,7 +63,7 @@ export default class LinkedList<T> {
 		}
 	}
 
-	private _getNodeAt(index: number): Node<T> {
+	private _getNodeAt(index: number): Node<T> | null {
 		this._assertAccessIndex(index);
 
 		let curr = this._head;
@@ -141,15 +140,21 @@ export default class LinkedList<T> {
 	}
 
 	deleteAt = (index: number): T | undefined => {
+		if(this._size === 0) return undefined;
 		this._assertAccessIndex(index);
+
 		if(index === 0) return this.deleteAtFront();
 		if(index === this._size - 1) return this.deleteAtEnd();
 
 		const prevNode: Node<T> | null = this._getNodeAt(index - 1);
-		const value: T = (prevNode.next as Node<T>).data
-		prevNode.next = prevNode.next!.next;
-		this._size--;
-		return value;
+		if(prevNode) {
+			const value: T = (prevNode.next as Node<T>).data
+			prevNode.next = prevNode.next!.next;
+			this._size--;
+			return value;
+		}
+
+		return undefined;
 	}
 
 	search = (query: T, comparator: (a: T, b: T) => boolean = (a, b) => a === b): number => {
@@ -163,7 +168,8 @@ export default class LinkedList<T> {
 		return -1;
 	};
 
-	getAt = (index:number) => {
+	getAt = (index:number): T  | undefined => {
+		if(this._size === 0) return undefined;
 		this._assertAccessIndex(index)
 
 		const node: Node<T> = this._getNodeAt(index);
@@ -222,3 +228,30 @@ export default class LinkedList<T> {
 
 
 // Analysis
+// General terms
+// 	- 	Time Complexity O(n) in general terms, having a reference to the head, the tail and
+// 		the size helps with some computations but for some actions we have to traverse
+// 		the linked list.
+// 	- 	Space complexity O(1) each node need some extra memory to keep referene for the next node.
+
+// Insert
+//	-	insertAtFront and insertAtEnd - Time Complexity O(1)
+//  - 	insertAt - Time Complexity O(n)
+
+// Delete
+// 	-	deleteAtFront - Time Complexity O(1)
+// 	- 	deleteAtEnd and deleteAt - Time Complexity 0(n)
+
+// search - Time Complexity O(n)
+
+// getAt - Time Complexity O(n)
+
+// isEmpty - Time Complexity O(1)
+
+// toArray - Time Complexity O(n)
+
+// size - Time Complexity O(1)
+
+// reverse - Time Complexity O(n) - Space complexity O(1), thanks to the prev, current, next reversal.
+
+// clear - Time Complexity O(1)

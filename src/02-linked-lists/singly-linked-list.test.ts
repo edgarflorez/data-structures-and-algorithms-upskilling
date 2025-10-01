@@ -335,15 +335,12 @@ describe("Linked List: Singly Linked List, getAt", () => {
 
 		expect(result).toStrictEqual(expected);
 	})
-	it("should get and error when trying to getAt on an empty Liked List", () => {
+	it("should get undefined when trying to getAt on an empty Liked List", () => {
 		const myLinkedList = new LinkedList();
-		const expected = "Index out of bound for access"
 
-		const result = () => {
-			myLinkedList.getAt(1);
-		};
+		const result = myLinkedList.getAt(1);
 
-		expect(result).toThrow(expected);
+		expect(result).toBeUndefined();
 	})
 	it("should thrown an error for a index out of bound, upperbound", () => {
 		const myLinkedList = new LinkedList();
